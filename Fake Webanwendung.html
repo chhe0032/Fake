@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Fake Web Application</title>
+        <link rel="stylesheet" href="styles.css">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script defer src="script.js"></script>
+    </head>
+<body>
+    <div id="landingPage" class="landingPage">
+        <h1>Welcome to the Onomatopoeia Voting App</h1>
+        <h3>Experimenting with onomatopoeia</h3>
+        <p><strong>Test your ability to distinguish between real and AI-generated audio tracks.</strong></p>
+        <p>
+            <u>Motivation:</u> Creation of sounds/imitations of animals and things like instruments in a human fashion (see ESC 50 dataset for original sounds) with text prompts (How well is that possible with AI?)<br>
+            Comparison with the recorded versions from the database VocalImitationSet 1.1.3 (what is fake and what is real?)<br>
+            When producing noises like the sounds of animals and instruments it is possible to identify ones noise due to its unique characteristics based on the vocal cords of each individual.<br>
+            Based on this two models are tested if they can replicate this characteristics when producing artificial noise.<br>
+            <br>
+            <strong>eleven_monolingual_v1 and AudioLDM2 are used to generate audio.</strong><br>
+            <br>
+            <u>Prompt Examples:</u><br>
+            <em>A woman with a childish voice is making the sounds of a … with just her voice.</em><br>
+            <em>A woman imitating the sound of a drumkit, drums with her voice.</em><br>
+            <em>(ComputerKeyboard) A man making fast clicking noises with his voice.</em><br>
+            <br>
+            <u>Speech to Speech:</u><br>
+            Send audio with the desired noise made by someone and recreate it artificially.
+        </p>
+        <br>
+        <br>
+        <p><strong>Sources:</strong><br>
+        Bongjun Kim, Madhav Ghei, Bryan Pardo, and Zhiyao Duan, "Vocal Imitation Set: a dataset of vocally imitated sound events using the AudioSet ontology," Proceedings of the Detection and Classification of Acoustic Scenes and Events 2018 Workshop (DCASE2018), Nov. 2018.</p>
+        <button id="startButton">Start</button>
+    </div>
+
+    <div id="mainApp" class="page hidden">
+
+    <div class="content" id="farm-animals">
+        <div class="button-grid">
+            <button class="sound-button" onclick="openModal('Chicken - Cluck')">
+                <img src="C:\Users\Christoph\Fake\Images\Chicken - Cluck.png" alt="Chicken" class="button-image">Chicken - Cluck</button>
+            <button class="sound-button" onclick="openModal('Cow - Moo')">
+                <img src="C:\Users\Christoph\Fake\Images\Cow - Moo.png" alt="Cow" class="button-image"> Cow - Moo</button>
+            <button class="sound-button" onclick="openModal('Goat - Bleat')">
+                <img src="C:\Users\Christoph\Fake\Images\Goat - Bleat.png" alt="Goat" class="button-image">Goat - Bleat</button>
+            <button class="sound-button" onclick="openModal('Pig - Oink')">
+                <img src="C:\Users\Christoph\Fake\Images\Pig - Oink.png" alt="Pig" class="button-image">Piggy - Oink</button>
+            <button class="sound-button" onclick="openModal('Rooster - Crowing')">
+                <img src="C:\Users\Christoph\Fake\Images\Rooster - Crowing.png" alt="Rooster" class="button-image">Rooster - Crowing</button>
+            <button class="sound-button" onclick="openModal('Duck - Quack')">
+                <img src="C:\Users\Christoph\Fake\Images\Duck - Quack.png" alt="Duck" class="button-image">Duck - Quack</button>
+        </div>
+    </div>
+
+    <div class="content hidden" id="instruments">
+        <div class="button-grid">
+            <button class="sound-button" onclick="openModal('ElectricGuitar')">
+                <img src="C:\Users\Christoph\Fake\Images\ElectricGuitar.png" alt="ElectricGuitar" class="button-image">Electric Guitar</button>
+            <button class="sound-button" onclick="openModal('Cello')">
+                <img src="C:\Users\Christoph\Fake\Images\Cello.png" alt="Cello" class="button-image">Cello</button>
+            <button class="sound-button" onclick="openModal('Drumkit')">
+                <img src="C:\Users\Christoph\Fake\Images\Drumkit.png" alt="Drumkit" class="button-image">Drumkit</button>
+            <button class="sound-button" onclick="openModal('Trumpet')">
+                <img src="C:\Users\Christoph\Fake\Images\Trumpet.png" alt="Trumpet" class="button-image">Trumpet</button>
+        </div>
+    </div>
+
+    <div class="content hidden" id="domestic-sound">
+        <div class="button-grid">
+            <button class="sound-button" onclick="openModal('ComputerKeyboard')">
+                <img src="C:\Users\Christoph\Fake\Images\ComputerKeyboard.png" alt="Computer Keyboard" class="button-image">Computer Keyboard</button>
+            <button class="sound-button" onclick="openModal('ToiletFlush')">
+                <img src="C:\Users\Christoph\Fake\Images\ToiletFlush.png" alt="Toilet Flush" class="button-image">Toilet Flush</button>
+            <button class="sound-button" onclick="openModal('VacuumCleaner')">
+                <img src="C:\Users\Christoph\Fake\Images\VacuumCleaner.png" alt="VacuumCleaner" class="button-image">Vacuum Cleaner</button>
+            <button class="sound-button" onclick="openModal('Microwave')">
+                <img src="C:\Users\Christoph\Fake\Images\Microwave.png" alt="Microwave" class="button-image">Microwave</button>
+        </div>
+    </div>
+
+    <div class="nav-bar">
+        <a href="#" class="active" onclick="showTab('farm-animals')">Farm Animals</a>
+        <a href="#" onclick="showTab('instruments')">Instruments</a>
+        <a href="#" onclick="showTab('domestic-sound')">Domestic Sound</a>
+        <a href="#" onclick="showTab('info-motivation')">Info/Stats</a>
+    </div>
+
+    <div id="info-motivation" class="content hidden">
+        <h2>Info & Stats</h2>
+        <div class="chart-container">
+            <canvas id="votesGraph" class="chart"></canvas>
+        </div>
+        <br>
+        <br>
+        <div class="chart-container">
+        <canvas id="accuracyGraph" class="chart"></canvas>
+        </div>
+        <br>
+        <div id="accuracyPercentage"></div>
+        <br>
+        <br>
+    </div>
+
+
+    <div id="modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h2 id="modal-title"></h2>
+            <div id="track-list">
+                <!-- Track list will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+</html>
+
+
